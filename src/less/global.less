@@ -1,0 +1,50 @@
+
+html, body, #app, #app_container {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#app_container {
+  height: auto;
+}
+
+* {
+  outline: none;
+  font-family: "Raleway";
+}
+
+a {
+  text-decoration: none;
+  display:block;
+  &,
+  &:visited,
+  &:active {
+    color: black;
+  }
+}
+p, div, ul, li{
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+h1 {
+  font-size: @h1;
+  .titleDefault();
+}
+
+h1,h2,h3,h4,h5,h6, nav *{
+  text-transform: uppercase;
+  font-weight: bold;
+  color:@blue;
+}
+
+textarea {
+  min-height: 4em !important;
+}

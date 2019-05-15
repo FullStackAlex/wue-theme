@@ -1,0 +1,104 @@
+@modalWidth: 30rem;
+#modal_container {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left:0;
+  position: fixed;
+  z-index: 1000;
+  border-radius: 0.8rem;
+  background-color: rgba(0,0,0,0);
+  transition: all .3s ease;
+  .open{
+    background-color: rgba(0,0,0,0.5);
+  }
+
+  #mobile_modal_container{
+    position: absolute;
+    border-radius: 0.8rem;
+    background-color: @green4;
+    left: calc(50%~'-'30rem / 2);
+    top: calc(50%~'-'@h1_height * 2);
+    height: 25rem;
+    width: @modalWidth;
+    transition: left .3s ease, filter .3s ease;
+  }
+
+  svg#ClosingCross {
+    width: 4rem;
+    display: block;
+    margin: 3rem auto 1rem;
+
+    #circle {
+      fill: white;
+    }
+
+    line {
+      stroke: white;
+    }
+  }
+
+  h1 {
+    background: none;
+    color: white;
+  }
+
+  h1.danger {
+    color: white;
+  }
+
+  .buttons {
+    .justifyAround();
+    .flex();
+    .flexRow();
+    margin-top: 2rem;
+
+    .button {
+      height: auto;
+      padding: 1rem;
+      border-radius: 10rem;
+      text-align: center;
+      width: 10rem;
+      box-sizing: border-box;
+      transition: all .3s ease;
+      margin: 0;
+      text-transform: uppercase;
+      font-weight: bold;
+
+      &:hover {
+        transform: scale(0.95);
+      }
+
+      &.delete {
+        background-color: white;
+        box-shadow: 0 0 1rem white;
+        color: @red;
+
+      }
+
+      &.cancel{
+        background-color: white;
+        box-shadow: 0 0 1rem white;
+        color: @green4;
+
+      }
+
+    }
+  }
+}
+
+
+@media (max-width: 480px) {
+  #modal_container {
+    #mobile_modal_container {
+      transform: scale(0.66);
+    }
+  }
+}
+
+body.app-nav-open {
+  #mobile_modal_container {
+    left: calc(50%~'+'@modalWidth / 2 - @headerWidth) !important;
+  }
+}
+

@@ -1,0 +1,62 @@
+{
+  "name": "webpack-vue-php",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.common.js",
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.3.4",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
+    "browserslist": "^4.4.2",
+    "clean-webpack-plugin": "^2.0.0",
+    "copy-webpack-plugin": "^5.0.0",
+    "css-loader": "^2.1.1",
+    "file-loader": "^3.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "vue": "^2.6.8",
+    "vue-loader": "^15.7.0",
+    "vue-router": "^3.0.2",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.8",
+    "vuex": "^3.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1",
+    "webpack-merge": "^4.2.1"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "gsap": "^2.1.2",
+    "jquery": "^3.3.1",
+    "jquery-migrate": "^3.0.1",
+    "magnific-popup": "^1.1.0",
+    "salvattore": "^1.0.9",
+    "slick-carousel": "^1.8.1",
+    "vue-concise-slider": "^3.3.9",
+    "vue-hot-reload-api": "^2.3.3",
+    "vue-json-pretty": "^1.4.1",
+    "vue-resource": "^1.5.1",
+    "vue-server-renderer": "^2.6.8",
+    "vue-slick": "^1.1.15"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 4 versions",
+    "not ie <= 10"
+  ]
+}

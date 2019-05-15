@@ -1,0 +1,85 @@
+@import (reference) "~@styles/variables";
+@import (reference) "~@styles/mixins";
+@import (reference) "~@styles/flex";
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: @blue1;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+:focus::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  color: @blue1;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+:focus::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  color: @blue1;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+:focus:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  color: @blue1;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+:focus:-moz-placeholder { /* Firefox 18- */
+  color: white;
+}
+
+
+.input {
+  margin-bottom: 1rem;
+  .placeholder(color, black);
+
+  label, input {
+    display: block;
+    border: none;
+    outline: none;
+  }
+
+  label {
+    margin: 0 0 0.5rem 0;
+  }
+
+  input {
+    text-align: center;
+  }
+}
+
+
+  //disable chromes and safari's input autofill styling
+  input:-webkit-autofill,
+  textarea:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  textarea:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  textarea:-webkit-autofill:active {
+    transition: background-color 0s ease-in-out 50000000s;
+    -webkit-text-fill-color: white !important;
+  }
+
+
+
+
