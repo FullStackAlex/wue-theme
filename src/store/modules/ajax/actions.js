@@ -12,8 +12,8 @@ export const setScrollTop = ({commit}, payload) => {
 };
 
 
-export const setSsrFalse = ({commit}) => {
-    commit('setSsrFalse');
+export const setInitialLoadFalse = ({commit}) => {
+    commit('setInitialLoadFalse');
 };
 
 

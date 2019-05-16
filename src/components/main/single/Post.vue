@@ -15,7 +15,7 @@
         data() {
             return {
                 postPromise: null,
-                ssr: this.$store.getters.isSsr,
+                initialLoad: this.$store.getters.isInitialLoad,
                 content: "",
                 post: {},
                 title: null,
@@ -42,11 +42,11 @@
         beforeMount() {
         },
         mounted() {
-            if (this.ssr) {
+            if (this.initialLoad) {
                 let initial_loader = document.getElementById("initial_loader");
                 document.body.removeChild(initial_loader);
                 this.content = technomad.initialData.post.content.rendered;
-                this.$store.dispatch("setSsrFalse");
+                this.$store.dispatch("setInitialLoadFalse");
                 this.$store.dispatch('setLoaderFalse');
                 this.title = technomad.initialData.title;
                 this.$store.dispatch("setPageTitle", this.title);

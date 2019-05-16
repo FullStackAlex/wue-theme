@@ -1,7 +1,15 @@
 <template>
     <header id="main_header">
         <component v-bind:is="navigationComponent"></component>
-        <logo v-if="home"></logo>
+        <transition name="homeTitle"
+                    @beforeEnter="homeTitleBeforeEnter"
+                    @enter="homeTitleEnter"
+                    @afterEnter="homeTitleAfterEnter"
+                    @beforeLeave="homeTitleBeforeLeave"
+                    @leave="homeTitleLeave"
+                    @afterLeave="homeTitleAfterLeave">
+            <logo v-if="home"></logo>
+        </transition>
         <transition name="homeTitle"
                     @beforeEnter="homeTitleBeforeEnter"
                     @enter="homeTitleEnter"
@@ -13,7 +21,7 @@
                 <span v-html="appTitle"></span><br><span v-html="subTitle"></span>
             </h1>
         </transition>
-        <transition name="moveright">
+        <transition name="pageTitle">
             <h1 id="page_title" class="inner-container" v-html="pageTitle" v-if="pageTitle" :key="pageTitle"></h1>
         </transition>
     </header>
@@ -110,32 +118,41 @@
         }
 
 
-        .moveright-enter {
-            transform: translate(-100%);
+        .pageTitle-enter {
+            transform: scale(0);
+        }
+
+        .pageTitle-enter-to {
+            transform: scale(1);
+            transition: all .3s ease .25s;
+        }
+
+        .pageTitle-leave-active {
+            transform: scale(0);
+            transition: all .2s ease;
             opacity: 0;
         }
 
-        .moveright-enter-to {
-            transform: translate(0%);
-            transition: all .5s ease !important;
-            opacity: 1;
+        .homeTitle-enter {
+            transform: scale(0);
         }
 
-        .moveright-leave-active {
-            transform: translate(200%);
-            transition: all .5s ease;
+        .homeTitle-enter-to {
+            transform: scale(1);
+            transition: all .3s ease .25s;
+        }
+
+        .homeTitle-leave-active {
+            transform: scale(0);
+            transition: all .2s ease;
             opacity: 0;
-            position: absolute;
         }
 
-        .homeTitle-enter{
-
-        }
 
     }
 
     [data-page-slug="Homepage"] {
-        #vue_svg {
+        #wue_svg {
             margin: 4rem auto 0;
         }
     }

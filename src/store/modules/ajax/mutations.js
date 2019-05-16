@@ -14,8 +14,8 @@ export const setScrollTop = (state, payload) => {
 };
 
 
-export const setSsrFalse = (state) => {
-    state.ssr = false;
+export const setInitialLoadFalse = (state) => {
+    state.initialLoad = false;
 };
 
 export const setDocumentTitle = (state, payload) => {

@@ -11,9 +11,9 @@ export const getScrollTop = state => {
 };
 
 
-export const isSsr = state => {
+export const isInitialLoad = state => {
 
-    return state.ssr;
+    return state.initialLoad;
 };
 
 export const getDocumentTitle = state => {

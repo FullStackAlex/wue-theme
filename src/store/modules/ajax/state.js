@@ -1,6 +1,6 @@
 export default {
     loader: true,
-    scrollTop: null, //scroll position before changing route to keep the scroll position in the new route
-    ssr: true,
+    scrollTop: null, //scroll posistion before changing route to keep the scroll position in the new route
+    initialLoad: true,
     documentTitle: null,
 }

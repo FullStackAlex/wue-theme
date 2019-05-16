@@ -59,28 +59,29 @@
     #main_container{
         .flexOne;
         overflow: hidden;
-        padding-bottom: 3rem;
         background: white;
         .flex;
+        .flexColumn;
         .alignItemsCenter;
         .justifyCenter;
     }
 
     .fade-enter {
         opacity: 0;
-        transform: translate(200%);
+        transform: scale(0);
     }
 
     .fade-enter-to {
         opacity: 1;
-        transition: all .4s ease .2s;
-        transform: translate(0%);
+        transition: all .3s ease .25s;
+        transform: scale(1);
     }
 
-
-    .fade-leave-active {
-        transform: translate(-200%);
-        transition: all .2s ease;
+    .fade-leave-to {
+        transform: scale(0);
+        opacity: 0;
+        transition: all .20s ease;
+        position:absolute;
     }
 
     .loader {

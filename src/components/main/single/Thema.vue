@@ -27,7 +27,7 @@
         name: 'Thema',
         data: function () {
             return {
-                ssr: this.$store.getters.isSsr,
+                initialLoad: this.$store.getters.isInitialLoad,
                 content: null,
                 title: null,
                 attachments: null,
@@ -52,14 +52,14 @@
         ,
         mounted() {
             this.$store.dispatch('setPageTitle', false);
-            if (this.ssr) {
+            if (this.initialLoad) {
                 let initial_loader = document.getElementById("initial_loader");
                 document.body.removeChild(initial_loader);
                 this.content = technomad.initialData.content;
                 this.attachments = technomad.initialData.attachments;
                 this.title = technomad.initialData.title;
                 this.document_title = this.title + " - " + technomad.bloginfo.name;
-                this.$store.dispatch("setSsrFalse");
+                this.$store.dispatch("setInitialLoadFalse");
                 this.$store.dispatch('setLoaderFalse');
                 this.$store.dispatch('setDocumentTitle', this.document_title);
                 this.$store.dispatch("setPageTitle", this.title);
