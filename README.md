@@ -8,3 +8,5 @@ with all the goodness of both worlds:
 A proper documentation is coming soon. Meanwhile you can check [my other repo where the webpack configs are commented properly](https://github.com/Tech-Nomad/wordpress-php-vue-webpack-hot-module-replacement-hmr-starter-setup).
 
 Demo: [wuetheme.tech-nomad.de](https://wuetheme.tech-nomad.de)
+
+# Today (27.05.2019) the navigation in the demo didn't work due to a overlooked bug. But now it's in SPA mode again. 

@@ -2,13 +2,20 @@
     <section id="header_nav" class="outer-container">
         <nav class="nav inner-container">
             <template v-for="nav_item in nav_items">
+                <!-- switching between text and logo SVG  for "Home" nav link-->
+                <!-- if route != home-->
                 <div :id="nav_item.title" class=" link" v-if="nav_item.title !== 'Home'">
-                    <router-link :to="nav_item.slug" active-class="active"
-                                 :exact="nav_item.classes.includes('exact') ? true : false">{{nav_item.title}}
+                    <router-link :to="nav_item.slug" active-class="active" :exact="nav_item.classes.includes('exact') ? true : false" v-if="internal(nav_item.slug)">
+                        {{nav_item.title}}
                     </router-link>
+                    <a :href="nav_item.slug" v-else>
+                        {{nav_item.title}}
+                    </a>
                 </div>
+                <!-- if home route-->
                 <div :id="nav_item.title" class=" link" v-else>
                     <transition name="logo">
+                        <!-- if logo ( = any page except homepage)-->
                         <router-link :to="nav_item.slug" class="logolink homelink" active-class="active"
                                      :exact="nav_item.classes.includes('exact') ? true : false"
                                      v-if="!home">
@@ -16,6 +23,7 @@
                         </router-link>
                     </transition>
                     <transition name="homelinktext">
+                        <!-- if text ( = only homepage) -->
                         <router-link :to="nav_item.slug" class="homelink" active-class="active"
                                      :exact="nav_item.classes.includes('exact') ? true : false"
                                      v-if="home">

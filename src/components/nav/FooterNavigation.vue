@@ -5,8 +5,8 @@
                 <nav :id="index" v-if="index.includes('footer')" class="column">
                     <template v-for="nav_item in footerNav">
                         <div :id="nav_item.title" class="link">
-                            <router-link :to="nav_item.slug" active-class="active" exact>{{nav_item.title}}
-                            </router-link>
+                            <router-link :to="nav_item.slug" active-class="active" exact v-if="internal(nav_item.slug)">{{nav_item.title}}</router-link>
+                            <a :href="nav_item.slug" target="_blank" v-else>{{nav_item.title}}</a>
                         </div>
                     </template>
                 </nav>
@@ -29,6 +29,15 @@
         components: {},
         mixins: [],
         methods: {
+
+            internal(slug){
+                if(slug.indexOf("http") === 0){
+                    console.log( "slug", slug );
+                    return false;
+                }else{
+                    return true;
+                }
+            },
             getFooterMenuLength() {
                 var size = 0, key;
                 for (key in technomad.menus) {
