@@ -1,5 +1,5 @@
 <template>
-    <section id="page_wrapper" class="outer-container">
+    <section id="pageWrapper" class="outer-container">
         <loader v-if="loader"></loader>
         <div class="inner-container" id="posts">
             <article v-for="(post,index) in posts" class="post">
@@ -10,14 +10,14 @@
                                 slug: post.slug,
                             }
                         }" active-class="active">
-                    <div class="img_container" v-if="initialLoad" v-html="post.img"></div>
-                    <div class="img_container" v-else>
+                    <div class="img-container" v-if="initialLoad" v-html="post.img"></div>
+                    <div class="img-container" v-else>
                         <template v-if="post._embedded['wp:featuredmedia']">
                             <img :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url"
                                  alt="">
                         </template>
                     </div>
-                    <h2 class="post_name" v-html="post.title.rendered"></h2>
+                    <h2 class="post-name" v-html="post.title.rendered"></h2>
                     <p v-html="post.content.rendered"></p>
                 </router-link>
             </article>
@@ -43,7 +43,7 @@
                 post_id: "",
                 content: "",
                 title: "News",
-                document_title: technomad.bloginfo.name,
+                documentTitle: technomad.bloginfo.name,
                 loader: true,
             }
         },
@@ -59,14 +59,15 @@
             this.$store.dispatch('setPageTitle', false);
             if (this.initialLoad) {
                 this.posts = technomad.initialData.posts;
-                let initial_loader = document.getElementById("initial_loader");
+                let initialLoader = document.getElementById("initialLoader");
                 this.title = technomad.archives.news.title;
-                document.body.removeChild(initial_loader);
+                document.body.removeChild(initialLoader);
                 this.$store.dispatch("setInitialLoadFalse");
                 this.$store.dispatch('setLoaderFalse');
-                this.document_title = this.title + " - " + technomad.bloginfo.name;
-                this.$store.dispatch('setDocumentTitle', this.document_title);
+                this.documentTitle = this.title + " - " + technomad.bloginfo.name;
+                this.$store.dispatch('setDocumentTitle', this.documentTitle);
                 this.loader = false;
+                this.mountedStuff();
             } else {
                 this.loader = true;
                 var host = technomad.host;
@@ -76,10 +77,11 @@
                         console.log("response.data", response.data);
                         this.posts = response.data;
                         this.title = technomad.archives.news.title;
-                        this.document_title = this.title + " - " + technomad.bloginfo.name;
-                        this.$store.dispatch('setDocumentTitle', this.document_title);
+                        this.documentTitle = this.title + " - " + technomad.bloginfo.name;
+                        this.$store.dispatch('setDocumentTitle', this.documentTitle);
                         this.$store.dispatch('setLoaderFalse');
                         this.loader = false;
+                        this.ajaxStuff();
                     })
                     .catch(error => {
                         console.log("error", error);
@@ -92,7 +94,7 @@
         activated() {
             this.$store.dispatch('setLoaderFalse');
             this.$store.dispatch("setPageTitle", this.title);
-            this.$store.dispatch('setDocumentTitle', this.document_title);
+            this.$store.dispatch('setDocumentTitle', this.documentTitle);
         },
         deactivated() {
 
@@ -158,7 +160,7 @@
                 color: black;
                 text-decoration: none;
 
-                .img_container {
+                .img-container {
                     height: auto;
                     .flex();
                     .alignItemsCenter();
@@ -171,7 +173,7 @@
                     }
                 }
 
-                .post_name {
+                .post-name {
                     color: @green;
                 }
             }

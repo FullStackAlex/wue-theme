@@ -1,5 +1,5 @@
 <template>
-    <div id="page_wrapper">
+    <div id="pageWrapper">
         <loader v-if="loader"></loader>
         <section v-if="content" class="outer-container">
             <div class="inner-container" v-html="content"></div>
@@ -22,7 +22,7 @@
             return {
                 initialLoad: this.$store.getters.isInitialLoad,
                 content: null,
-                document_title: technomad.bloginfo.name,
+                documentTitle: technomad.bloginfo.name,
                 loader: true
             }
         },
@@ -45,16 +45,17 @@
             console.log("mounted");
             this.$store.dispatch('setPageTitle', false);
             if (this.initialLoad) {
-                let initial_loader = document.getElementById("initial_loader");
-                document.body.removeChild(initial_loader);
+                let initialLoader = document.getElementById("initialLoader");
+                document.body.removeChild(initialLoader);
                 this.title = technomad.initialData.title;
                 this.themen = technomad.initialData.themen;
                 this.content = technomad.initialData.content;
-                this.document_title = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
+                this.documentTitle = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
                 this.$store.dispatch("setInitialLoadFalse");
                 this.$store.dispatch('setLoaderFalse');
-                this.$store.dispatch("setDocumentTitle", this.document_title);
+                this.$store.dispatch("setDocumentTitle", this.documentTitle);
                 this.loader = false;
+                this.mountedStuff();
             } else {
                 this.loader = true;
                 var host = technomad.host;
@@ -63,11 +64,12 @@
                     .then(response => {
                         console.log("response.data", response.data);
                         this.themen = response.data.themen;
-                        this.document_title = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
+                        this.documentTitle = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
                         this.content = response.data.content;
                         this.$store.dispatch('setLoaderFalse');
-                        this.$store.dispatch("setDocumentTitle", this.document_title);
+                        this.$store.dispatch("setDocumentTitle", this.documentTitle);
                         this.loader = false;
+                        this.ajaxStuff();
                     })
                     .catch(error => {
                         this.$store.dispatch('setLoaderFalse');
@@ -93,7 +95,7 @@
         activated() {
             this.$store.dispatch("setPageTitle", false);
             this.$store.dispatch('setLoaderFalse');
-            this.$store.dispatch("setDocumentTitle", this.document_title);
+            this.$store.dispatch("setDocumentTitle", this.documentTitle);
         },
         deactivated() {
 

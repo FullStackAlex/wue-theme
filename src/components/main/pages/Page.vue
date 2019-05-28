@@ -1,5 +1,5 @@
 <template>
-    <div id="page_wrapper" class="outer-container">
+    <div id="pageWrapper" class="outer-container">
         <loader v-if="loader"></loader>
         <div class="inner-container" v-html="content"></div>
     </div>
@@ -19,7 +19,7 @@
                 content: null,
                 page: null,
                 title: null,
-                document_title: technomad.bloginfo.name,
+                documentTitle: technomad.bloginfo.name,
                 loader: true,
             }
         },
@@ -37,16 +37,17 @@
         mounted() {
 
             if (this.initialLoad) {
-                let initial_loader = document.getElementById("initial_loader");
-                document.body.removeChild(initial_loader);
+                let initialLoader = document.getElementById("initialLoader");
+                document.body.removeChild(initialLoader);
                 this.content = technomad.initialData.content;
                 this.title = technomad.initialData.title;
-                this.document_title = this.title + " - " + technomad.bloginfo.name;
+                this.documentTitle = this.title + " - " + technomad.bloginfo.name;
                 this.$store.dispatch("setInitialLoadFalse");
                 this.$store.dispatch('setLoaderFalse');
                 this.$store.dispatch("setPageTitle", this.title);
-                this.$store.dispatch('setDocumentTitle', this.document_title);
+                this.$store.dispatch('setDocumentTitle', this.documentTitle);
                 this.loader = false;
+                this.mountedStuff();
             } else {
                 this.loader = true;
                 var host = technomad.host;
@@ -57,11 +58,12 @@
                         this.page = response.data[0];
                         this.content = this.page.content.rendered;
                         this.title = this.page.title.rendered;
-                        this.document_title = this.title  + " - " + technomad.bloginfo.name;
+                        this.documentTitle = this.title  + " - " + technomad.bloginfo.name;
                         this.$store.dispatch('setLoaderFalse');
                         this.$store.dispatch("setPageTitle", this.title);
-                        this.$store.dispatch('setDocumentTitle', this.document_title);
+                        this.$store.dispatch('setDocumentTitle', this.documentTitle);
                         this.loader = false;
+                        this.ajaxStuff();
                     })
                     .catch(error => {
                         this.$store.dispatch('setLoaderFalse');
@@ -82,7 +84,7 @@
         activated() {
             this.$store.dispatch('setLoaderFalse');
             this.$store.dispatch("setPageTitle", this.title);
-            this.$store.dispatch('setDocumentTitle', this.document_title);
+            this.$store.dispatch('setDocumentTitle', this.documentTitle);
         },
         deactivated() {
         },
@@ -95,7 +97,7 @@
 
 
 
-    #page_wrapper{
+    #pageWrapper{
         text-align: center;
     }
 

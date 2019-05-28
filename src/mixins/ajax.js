@@ -2,6 +2,12 @@ import router from "~/router";
 
 export default {
     methods: {
+        ajaxStuff() {
+            /**
+             * defined in globalMain.js
+             **/
+            this.setInternalRouterLinksInsideContent();
+        },
         scrollToTop(next) {
 
         }

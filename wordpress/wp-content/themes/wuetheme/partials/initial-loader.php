@@ -1,6 +1,6 @@
-<div id="initial_loader">
+<div id="initialLoader">
     <style>
-        #initial_loader {
+        #initialLoader{
             width: 100%;
             height: 100%;
             background-color: white;
@@ -26,15 +26,15 @@
             -ms-grid-row-align: center;
             align-items: center;
         }
-        #initial_loader svg{
+        #initialLoader svg{
 
         }
     </style>
-    <svg id="wue_svg_initial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 220.8">
+    <svg id="wueSvgInitial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 220.8">
         <defs>
             <style>
 
-                #wue_svg_initial {
+                #wueSvgInitial {
                     width: 10rem;
                 }
 
@@ -47,7 +47,7 @@
                 }
             </style>
         </defs>
-        <title>Wue - The first Plug and Play Vue WordPress Theme</title>
+        <title>Wue - The Plug and Play Vue WordPress Theme</title>
         <path class="initialLoaderBlue" d="M50.56,0,128,133.12,204.8,0H157.44L128,51.2,97.92,0Z"/>
         <polygon class="initialLoaderGreen"
                  points="410 0 358.8 0 282 132.48 204.8 0 204.68 0.21 204.56 0 128 132.48 50.56 0 0 0 128 220.8 205 87.97 282 220.8 410 0"/>

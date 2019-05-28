@@ -60,11 +60,6 @@ export default new VueRouter({
                     ]
                 },
                 {
-                    path: 'thema/:slug',
-                    name: 'Thema',
-                    component: () => import('~/components/main/single/Thema.vue')
-                },
-                {
                     path: ':slug',
                     name: 'Page',
                     component: () => import( '~/components/main/pages/Page.vue')
