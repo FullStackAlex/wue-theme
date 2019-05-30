@@ -3,7 +3,7 @@ with all the goodness of both worlds:
 - Webpacks Hot Module Replacement (HMR) inside php files! 
 - PHP rendering (keep using usual WordPress templates to organise your theme)! 
 - Full SEO support without Nuxt.js or even phpv8/v8js! 
-- Thus keep using the window object in your Vue templates! How cooooool is this! :)
+- Thus keep using the window object in your Vue templates! How cooooool is this! :blush:
 - keep-alive is working! No need for local storage or to use Vuex to handle all the loaded data! That's actually the reason why I stopped working on a Nuxt.js implimentation in January 2019. Nuxt.js doesn't support (properly?) the native keep-alive feature of Vue - at least I couldn't get it work and actually a bunch of other people, too. And how Sebastien Chopin treated the requests was totally disapointing to me:
 [https://github.com/nuxt/nuxt.js/issues/431](https://github.com/nuxt/nuxt.js/issues/431)
    
@@ -59,15 +59,26 @@ with all the goodness of both worlds:
     ~~~~
     
 3. create a database named wue_theme_public and a database user wuethemepublic or just change the db credentials in the wp-config.php 
-
-4. start dev server:
+4. import database into your MySQL server:
+    ~~~~
+    cd /Users/YourUserName/path/to/project/wue-theme-public
+    mysql -uwuethemepublic -pcornhulio wue_theme_public < database.sql
+    ~~~~
+   
+5. Install dev node modules (I assume you have [Node.js](https://nodejs.org/en/download/) installed):
+    ~~~~
+    cd /Users/YourUserName/path/to/project/wue-theme-public
+    npm install
+    ~~~~
+6. start dev server:
     ~~~~
     cd /Users/YourUserName/path/to/project/wue-theme-public
     npm run start    
     ~~~~
     * if port 9200 is already in use change it to any other in the webpack.dev.js
     
-5. Login into WordPress Backend:
+7. Login into WordPress Backend:
+    * https://dev.wue-theme-public/wp-admin
     * User: KungFuMaster
     * Password: kamasutra
     

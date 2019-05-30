@@ -28,7 +28,19 @@ export default {
         },
         mountedStuff(){
             this.setInternalRouterLinksInsideContent();
+        },
+
+        checkDateVsModified(date, modified){
+            if(
+                new Date(modified).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
+                ===
+                new Date(date).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })){
+                return false;
+            }else{
+                return  "(Updated: "+ new Date(modified).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' }) + ")"
+            }
         }
+
 
     }
 

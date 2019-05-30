@@ -12,6 +12,8 @@ if ( have_posts() ) {
 		the_post();
 		$data                                = [];
 		$data["title"]                       = get_the_title();
+		$data["post"]["date"]                = get_the_date();
+		$data["post"]["update"]              = get_the_modified_date();
 		$data["post"]["content"]["rendered"] = do_shortcode( get_the_content() );
 	}
 }

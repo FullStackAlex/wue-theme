@@ -1,6 +1,18 @@
 <template>
-    <section id="pageWrapper" class="outer-container">
+    <section id="pageWrapper" class="outer-container single-post">
         <loader v-if="loader"></loader>
+        <div class="post-time inner-container" v-if="post.date">
+            <span class="date" v-if="initialLoad">
+                            {{post.date}}
+                        </span>
+            <span class="date" v-else>
+                            {{ new Date(post.date).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}}
+                        </span>
+            <span class="update" v-if="post.update && post.update !== post.date"><br>(Updated: {{post.update}})</span>
+            <span class="update" v-else-if="checkDateVsModified(post.date, post.modified)">
+                <br>{{checkDateVsModified(post.date, post.modified)}}
+            </span>
+        </div>
         <div id="single-post" class="blog-post post inner-container" v-html="content"></div>
     </section>
 </template>
@@ -30,8 +42,7 @@
             globalMainMixins,
             ajaxMixins
         ],
-        methods: {
-        },
+        methods: {},
         computed: {
             slug() {
                 return this.$route.params.slug;
@@ -92,12 +103,47 @@
     @import "~@styles/flex";
     @import "~@styles/mixins";
 
+    [data-page-slug="Post"] {
+        #main_header {
 
-    #main_header_title {
-        margin-bottom: 2rem;
-        //filter: drop-shadow(0 0.25rem 0.125rem rgba(0, 0, 0, 0.5));
+            #page_title {
+                font-size: 2.5rem;
+                @media (max-width: @tablet_width_max) {
+                    font-size: 1.75rem;
+                }
+            }
+        }
+
+        #main_header_title {
+            margin-bottom: 2rem;
+            //filter: drop-shadow(0 0.25rem 0.125rem rgba(0, 0, 0, 0.5));
+        }
+
+        #pageWrapper.single-post {
+            .blog-post {
+                overflow-x: hidden;
+                overflow-y: auto;
+
+                p {
+                    a {
+                        color: @green !important;
+                    }
+
+                }
+            }
+
+            .post-time {
+                font-weight: bold;
+                color: grey;
+                font-size: 2rem;
+                text-transform: uppercase;
+                text-align: center;
+                @media (max-width: @tablet_width_max) {
+                    font-size: 1rem;
+                }
+            }
+        }
     }
-
 
 
 </style>
