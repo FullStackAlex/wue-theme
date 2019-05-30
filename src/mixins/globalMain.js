@@ -3,41 +3,52 @@
 export default {
 
     methods: {
-        setInternalRouterLinksInsideContent(){
+        setInternalRouterLinksInsideContent() {
 
             /**
              * passes absolute public path links like <a href="/bla">Bla</a> inside any page or post content to the vue router
              **/
             var vm = this;
-            setTimeout(()=>{
+            setTimeout(() => {
 
                 let pageWrapper = document.getElementById("pageWrapper");
                 let links = pageWrapper.getElementsByTagName("A");
                 links = Array.from(links);
-                links.forEach(function(link){
+                links.forEach(function (link) {
                     let href = link.getAttribute("href");
-                    if(href.indexOf("/" === 0)){
-                        link.addEventListener("click", function(e){
+                    if (href.indexOf("/" === 0)) {
+                        link.addEventListener("click", function (e) {
                             e.preventDefault();
                             vm.$router.push(href);
-                        },false);
+                        }, false);
                     }
                 });
 
-            },500);
+            }, 500);
         },
-        mountedStuff(){
+        mountedStuff() {
             this.setInternalRouterLinksInsideContent();
         },
 
-        checkDateVsModified(date, modified){
-            if(
-                new Date(modified).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
-                ===
-                new Date(date).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })){
-                return false;
-            }else{
-                return  "(Updated: "+ new Date(modified).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' }) + ")"
+        /**
+         * check if publish date is equal to modified, if so: don't show modified/updated date
+         **/
+        checkDateVsModified(date, modified) {
+
+            if (modified !== undefined) {
+
+                if (new Date(modified).toLocaleString('en-us', {year: 'numeric', month: 'long', day: 'numeric'})
+                    ===
+                    new Date(date).toLocaleString('en-us', {year: 'numeric', month: 'long', day: 'numeric'}))
+                {
+                    return false;
+                } else {
+                    return "(Updated: " + new Date(modified).toLocaleString('en-us', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    }) + ")"
+                }
             }
         }
 

@@ -14,6 +14,21 @@ with all the goodness of both worlds:
 
 ## Demo: [wuetheme.tech-nomad.de](https://wuetheme.tech-nomad.de)
 
+## How it works:
+„Conventional“ Single Page Applications use the headless approach where the backend is reduced to output the JSON data for the frontend app. While this is great for performance it is bad for SEO. So you need to pre-render the app or render it on each request on the server side. The most famous tool for Server Side Rendering (SSR) Vue.js apps is Nuxt.js. But it has some disadvantages. First it requires to remove all the window object references from the Vue components. Then the router has to be adapted to the Nuxt-Workflow. For me the killer argument was that the keep-alive feature doesn’t work (properly) with Nuxt.js. And on the top of this you need learn one technology more and setup an extra node.js Server vor serving the rendered files. I don't have any problems to learn new things. Otherwise this theme wouldn't exist :) But why should I use and setup a Node.js server to get a WordPress site work?! Noway. In some cases (some supa dupa high tech sites with a bunch of micro services and 50 different backend technologies and a team of 20 people for both backend and frontend - but why are you using WordPress then? :grin:) it might be ok. But not in the most of the WordPress use cases. 
+
+After keep-alive troubles I've tried it with [phpv8/v8js](https://github.com/phpv8/v8js). But after I fought myself through the installation I found out you have to eliminate all the window object reference from all the node_modules used in your package.json! In my simple app the app.bundle.js contained over 70 window object references even I didn't use any inside my components! Fuck that shit! :angry:   
+
+Though you can probably get SSR with v8js when using vue.js without any webpack stuff, just as a drop-in-library (did not test it).
+
+So after this problem has arised and when reading through [Vue.js SSR docs](https://vuejs.org/v2/guide/ssr.html) I found there a claim that Google crawls a JavaScript rendered site, but does not wait for the Ajax responses from the server upon the initial App request. So why you not just send the data with the HTML as I do all the time when [localizing a script](https://developer.wordpress.org/reference/functions/wp_localize_script/) in my WordPress themes?! And that's exactly what I did. I've added a global window object / variable in the header.php named technomad and appended all the data I need at the start of rendering the app by Vue.js. And each template (page.php, index.php or whatever.php) adds more stuff to this object. This way you can continue to use your usual template structure on the PHP side. That's actually it. There are no any other "secrets". All the other difficulties (pagenation, comments etc) are not related to the kind of app rendering but will appear in each case regardless whether you use this or a headless approach. I will also provide here some solutions regarding those other difficulties in future. But the main goal of this theme was and is to provide a simple SEO friendly WordPress+Vue Plug-And-Play starter theme as there were no proper documentation of my approach at the time I've started to work on it (January 2019).    
+
+## SEO
+* Use a [sitemap plugin](https://wordpress.org/plugins/google-sitemap-generator/)
+* Index your site through your [Google Search Console](http://search.google.com/search-console/about?hl=de )
+* Don't trust Google and request indexing of all your pages / URLs manually in your Google Search Console, [see my post on this](https://wue-a-vue-js-wordpress-theme.tech-nomad.de/news/seo-issues)
+
+
 ## Dev Environment Setup
 1. download this repo
 2. setup local Apache VirtualHost named dev.wue-theme-public (on Mac):

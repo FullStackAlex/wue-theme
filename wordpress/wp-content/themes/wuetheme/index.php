@@ -31,7 +31,8 @@ if ( $post_query->have_posts() ) {
 			$data["posts"][ $counter ]["img"] = get_the_post_thumbnail( get_the_ID(), "medium_large" );
 		}
 
-
+		$data["posts"][ $counter ]["date"]                = get_the_date();
+		$data["posts"][ $counter ]["update"]              = get_the_modified_date();
 		$data["posts"][ $counter ]["content"]["rendered"] = get_the_content();
 		$data["posts"][ $counter ]["id"]                  = get_the_ID();
 		$counter ++;

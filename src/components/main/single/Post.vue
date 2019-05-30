@@ -57,6 +57,7 @@
                 let initialLoader = document.getElementById("initialLoader");
                 document.body.removeChild(initialLoader);
                 this.content = technomad.initialData.post.content.rendered;
+                this.post = technomad.initialData.post;
                 this.$store.dispatch("setInitialLoadFalse");
                 this.$store.dispatch('setLoaderFalse');
                 this.title = technomad.initialData.title;
