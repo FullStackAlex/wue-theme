@@ -22,6 +22,4 @@ export const setDocumentTitle = (state, payload) => {
     let noLineBreaks = payload.replace("<br>", " ");
     document.title = noLineBreaks;
     state.documentTitle = noLineBreaks;
-
-    _paq.push(["trackEvent", "Menu", noLineBreaks]);
 };

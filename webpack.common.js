@@ -3,6 +3,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
 
+/**
+ * enable or disable sourceMap
+ **/
+let  sourceMap = false;
+
 
 module.exports = {
     entry: {
@@ -42,13 +47,13 @@ module.exports = {
                 }, {
                     loader: 'css-loader',
                     options:{
-                        sourceMap: true
+                        sourceMap: sourceMap
                     }
                 }, {
                     loader: 'less-loader', options: {
                         strictMath: true,
                         noIeCompat: true,
-                        sourceMap: true
+                        sourceMap: sourceMap
                     }
                 },]
             },

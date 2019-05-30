@@ -48,7 +48,16 @@
         components: {
             logo
         },
-        methods: {},
+        methods: {
+            internal(slug){
+                if(slug.indexOf("http") === 0){
+                    console.log( "slug", slug );
+                    return false;
+                }else{
+                    return true;
+                }
+            },
+        },
         mounted: function () {
 
 

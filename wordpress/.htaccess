@@ -1,0 +1,30 @@
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+
+#do not allow access to data sensetive files and do not list directory indexes
+<Files "*.log">
+Order Allow,Deny
+Deny from all
+</Files>
+
+<Files "*.sql">
+Order Allow,Deny
+Deny from all
+</Files>
+
+<Files "*.json">
+Order Allow,Deny
+Deny from all
+</Files>
+
+Options -Indexes
