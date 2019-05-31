@@ -39,8 +39,8 @@
 <script>
 
     import axios from "axios"
-    import ajaxMixins from "~/mixins/ajax"
-    import globalMainMixins from "~/mixins/globalMain"
+    import ajaxMixins from "~/mixins/ajaxMixins"
+    import globalMainMixins from "~/mixins/globalMainMixins"
     import loader from "~/components/ui/loaders/Main"
 
 

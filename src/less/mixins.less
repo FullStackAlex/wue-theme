@@ -2,64 +2,7 @@
 @import (reference) "flex";
 
 
-.orange1 {
-  &, & > a {
-    background-color: @orange1;
-  }
-}
 
-.orange2 {
-  &, & > a {
-    background-color: @orange2;
-  }
-}
-
-.orange3 {
-  &, & > a {
-    background-color: @orange3;
-  }
-}
-
-
-.blue1 {
-  &, & > a {
-    background-color: @blue1;
-  }
-}
-
-.blue2 {
-  &, & > a {
-    background-color: @blue2;
-  }
-}
-
-.blue2 {
-  &, & > a {
-    background-color: @blue2;
-  }
-}
-
-.green4 {
-  &, & > a {
-    background-color: @green4;
-  }
-}
-
-.green4 {
-  &, & > a {
-    background-color: @green4;
-  }
-}
-
-.green2 {
-  &, & > a {
-    background-color: @green2;
-  }
-}
-
-.appBackGroundColor {
-  background-color: @appBackGroundColor;
-}
 
 .titleDefault(@color: black) {
   color: @color;
@@ -87,28 +30,7 @@
 
 
 .defaultTransition() {
-  transition: all .5s ease;
-}
-
-
-.svgText() {
-  svg {
-    //background: yellow;
-    width: 50rem;
-    max-width: 100%;
-    @media (max-width: 800px) {
-      width: 100%;
-    }
-
-    text {
-      stroke: black;
-      fill: @green;
-      text-anchor: middle;
-      dominant-baseline: central;
-      letter-spacing: 0.06em;
-      stroke-width: 0.001em;
-    }
-  }
+  transition: all .3s ease;
 }
 
 
@@ -119,7 +41,7 @@
   width: auto;
   text-align: center;
   a{
-    color: #39af78;
+    color: @green;
     font-weight: bold;
     font-size: 2rem;
     transform: scale(1);

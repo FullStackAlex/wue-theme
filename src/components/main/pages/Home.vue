@@ -2,6 +2,10 @@
     <div id="pageWrapper">
         <loader v-if="loader"></loader>
         <section v-if="content" class="outer-container">
+            <logo></logo>
+            <h1 id="homePageTitle" class="title">
+                <span v-html="appTitle"></span><br><span v-html="subTitle"></span>
+            </h1>
             <div class="inner-container" v-html="content"></div>
         </section>
     </div>
@@ -9,12 +13,10 @@
 <script>
 
     import axios from "axios";
-    import HeaderNavigation from "~/components/nav/HeaderNavigation"
-    import MainHeader from "~/components/header/MainHeader"
-    import ajaxMixins from "~/mixins/ajax"
-    import globalMainMixins from "~/mixins/globalMain"
+    import ajaxMixins from "~/mixins/ajaxMixins"
+    import globalMainMixins from "~/mixins/globalMainMixins"
     import loader from "~/components/ui/loaders/Main"
-
+    import logo from "~/components/header/Logo.vue"
 
     export default {
         name: 'Homepage',
@@ -27,28 +29,27 @@
             }
         },
         components: {
-            HeaderNavigation,
-            MainHeader,
-            loader
+            loader,
+            logo
         },
-        methods: {},
         mixins: [
             globalMainMixins,
             ajaxMixins,
         ],
-        computed: {},
-
-        beforeMount() {
-        }
-        ,
+        computed: {
+            appTitle() {
+                return this.$store.getters.getAppTitle.name;
+            },
+            subTitle() {
+                return this.$store.getters.getAppTitle.description;
+            }
+        },
         mounted() {
-            console.log("mounted");
             this.$store.dispatch('setPageTitle', false);
             if (this.initialLoad) {
                 let initialLoader = document.getElementById("initialLoader");
                 document.body.removeChild(initialLoader);
                 this.title = technomad.initialData.title;
-                this.themen = technomad.initialData.themen;
                 this.content = technomad.initialData.content;
                 this.documentTitle = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
                 this.$store.dispatch("setInitialLoadFalse");
@@ -63,7 +64,6 @@
                 axios.get(path)
                     .then(response => {
                         console.log("response.data", response.data);
-                        this.themen = response.data.themen;
                         this.documentTitle = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
                         this.content = response.data.content;
                         this.$store.dispatch('setLoaderFalse');
@@ -81,106 +81,41 @@
                 }
             }
         },
-        created() {
-        },
-        updated() {
-        },
-
-        beforeCreate() {
-        },
-        beforeDestroy() {
-        },
-        destroyed() {
-        },
         activated() {
             this.$store.dispatch("setPageTitle", false);
             this.$store.dispatch('setLoaderFalse');
             this.$store.dispatch("setDocumentTitle", this.documentTitle);
         },
-        deactivated() {
-
-        },
-
 
     }
 </script>
 <style lang="less">
     @import (reference) "~@styles/variables";
 
-
-    body[data-page-slug="homepage"] {
-
-
+    body[data-page-slug="Homepage"] {
+        #wue_svg {
+            margin: 4rem auto 0;
+        }
+    }
+    #homePageTitle {
+        font-size: 3rem;
+        padding: 3rem 0 1.5rem;
+        font-weight: 400;
     }
 
-    #themen {
-
-        .column {
-            .thema {
-                position: relative;
-                border-radius: 1rem;
-                width: 100%;
-                margin: 1rem 0;
-
-                h2 {
-                    position: absolute;
-                    text-align: center;
-                    left: 0;
-                    bottom: 0;
-                    width: 100%;
-                    font-size: 2rem;
-                    padding: 1rem 0;
-                    color: white;
-                    margin: 0;
-                    background: rgba(0, 0, 0, 0.3);
-                }
-
-                img {
-                    width: 100%;
-                    height: auto;
-                    display: block;
-                }
+    
+    @media (max-width: @inner_container_width_px) {
+            #homePageTitle {
+                height: auto;
+                font-size: 2.5rem;
             }
-        }
     }
 
-    #themen .inner-container[data-columns]::before {
-        content: '2 .column.size-1of2';
-    }
 
-    .inner-container[data-columns] {
-
-        .column {
-            opacity: 0;
-        }
-
-        .size-1of2 {
-            opacity: 1;
-            width: calc(50% ~'-' 0.5rem);
-        }
-    }
-
-    @media (max-width: @tablet_width_max) {
-        #themen {
-
-            .column {
-                .thema {
-                    h2 {
-                        font-size: 1.25rem;
-                    }
-                }
-            }
-        }
-
-    }
-
-    @media (max-width: 600px) {
-        .inner-container[data-columns] {
-
-            .column {
-                width: 85%;
-                margin: auto;
-            }
+    @media (max-width: 479px) {
+            #homePageTitle {
+                height: auto;
+                font-size: 2rem;
         }
     }
 </style>

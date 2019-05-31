@@ -10,13 +10,12 @@ export default {
              **/
             var vm = this;
             setTimeout(() => {
-
                 let pageWrapper = document.getElementById("pageWrapper");
                 let links = pageWrapper.getElementsByTagName("A");
                 links = Array.from(links);
                 links.forEach(function (link) {
                     let href = link.getAttribute("href");
-                    if (href.indexOf("/" === 0)) {
+                    if (href.indexOf("/") === 0) {
                         link.addEventListener("click", function (e) {
                             e.preventDefault();
                             vm.$router.push(href);

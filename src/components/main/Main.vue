@@ -11,7 +11,7 @@
 <script>
 
     import LoaderMain from '~/components/ui/loaders/Main'
-    import globalMainMixins from "~/mixins/globalMain"
+    import globalMainMixins from "~/mixins/globalMainMixins"
 
     export default {
         name: 'MainVue',
