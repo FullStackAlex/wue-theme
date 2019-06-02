@@ -3,32 +3,40 @@ get_header();
 ?>
 <body>
 <?php
-initial_loader();
 
-if ( have_posts() ) {
+if ( technomad_bot_detected() ) {
 
-	// Load posts loop.
-	while ( have_posts() ) {
-		the_post();
-		$data            = [];
-		$data["title"]   = get_the_title();
-		$data["content"] = get_the_content();
+	get_template_part( "template-parts/bot-markup/post" );
 
+} else {
+
+	initial_loader();
+
+	if ( have_posts() ) {
+
+		// Load posts loop.
+		while ( have_posts() ) {
+			the_post();
+			$data            = [];
+			$data["title"]   = get_the_title();
+			$data["content"] = get_the_content();
+		}
 	}
+
+	?>
+
+    <script>
+        technomad.initialData = <?php
+
+		print_r( json_encode( $data ) )
+
+		?>;
+    </script>
+    <div id="app"></div>
+
+	<?php
+
 }
-?>
-
-
-<script>
-    technomad.initialData = <?php
-
-	print_r( json_encode( $data ) )
-
-	?>;
-</script>
-<div id="app"></div>
-
-<?php
 get_footer();
 ?>
 

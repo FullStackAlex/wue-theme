@@ -1,9 +1,7 @@
-# Update 01.06.2019 
-# Sorry Guys, but SEO of this repo is currently not working properly. Google bots are unpredictable - all the time till yesterday the bots have indexed properly all the pages I have manually requested indexation for (from Google Search Console). And my site was even on the first page when searching for "vue wordpress theme seo". But today the Google bot didn't wait until Vue.js has rendered the content, even the page load is around 500ms.  And my site is not only out of the first search results (when googling for "vue wordpress theme seo") but is not available at all in the search results :sob: So to be on the safe side there is no getting around outputting bare HTML for the bots :(  [See official statetement by Google I've found today and which was updated last time in Mai 2019](https://developers.google.com/search/docs/guides/dynamic-rendering). That's what I will go for next weeks/months. Nuxt.js / Node.js in context of WordPress is still not an option to me.  
+# Update 02.06.2019 
+#### Yesterday I've discovered huge problems with SEO. But today I've fixed them 🎉 and now the theme has a slightly different, but bulletproof SEO approach. I've added a bot detection from within php and load now a simple markup extra for the bots. This works now perfectly and isn't a huge deal actually. I will add more details on this next days in the SEO section of this README file.
 
-# Here my previous blabla :grin:
-
-## Wue Theme - A Vue.js WordPress single page application starter theme  
+# Wue Theme - A Vue.js WordPress single page application starter theme  
 with all the goodness of both worlds: 
 - Webpacks Hot Module Replacement (HMR) inside php files! 
 - PHP rendering (keep using usual WordPress templates to organise your theme)! 
