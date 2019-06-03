@@ -74,13 +74,14 @@ function enqueue_header_script() {
 
 /**
  * check if user agent is bot
- * https://stackoverflow.com/questions/677419/how-to-detect-search-engine-bots-with-php
+ * https://stackoverflow.com/a/15047834/4721232
+ * https://developers.google.com/search/docs/guides/dynamic-rendering
  **/
 
 function technomad_bot_detected() {
 	return (
 		isset($_SERVER['HTTP_USER_AGENT'])
-		&& preg_match('/bot|crawl|slurp|spider|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])
+		&& preg_match('/bot|googlebot|crawl|slurp|google-structured-data-testing-tool|spider|linkedinbot|bingbot|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])
 	);
 }
 

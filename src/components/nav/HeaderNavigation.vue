@@ -2,34 +2,18 @@
     <section id="header_nav" class="outer-container">
         <nav class="nav inner-container">
             <template v-for="nav_item in nav_items">
-                <!-- switching between text and logo SVG  for "Home" nav link-->
-                <!-- if route != home-->
-                <div :id="nav_item.title" class=" link" v-if="nav_item.title !== 'Home'">
-                    <router-link :to="nav_item.slug" active-class="active" :exact="nav_item.classes.includes('exact') ? true : false" v-if="internal(nav_item.slug)">
+                <div :id="nav_item.title" class=" link">
+                    <router-link
+                            :to="nav_item.slug"
+                            :class="nav_item.title === 'Home' ? 'homeLink' : '' "
+                            active-class="active"
+                            :exact="nav_item.classes.includes('exact') ? true : false"
+                            v-if="internal(nav_item.slug)">
                         {{nav_item.title}}
                     </router-link>
                     <a :href="nav_item.slug" v-else>
                         {{nav_item.title}}
                     </a>
-                </div>
-                <!-- if home route-->
-                <div :id="nav_item.title" class=" link" v-else>
-                    <transition name="logo">
-                        <!-- if logo ( = any page except homepage)-->
-                        <router-link :to="nav_item.slug" class="logolink homelink" active-class="active"
-                                     :exact="nav_item.classes.includes('exact') ? true : false"
-                                     v-if="!home">
-                            <logo></logo>
-                        </router-link>
-                    </transition>
-                    <transition name="homelinktext">
-                        <!-- if text ( = only homepage) -->
-                        <router-link :to="nav_item.slug" class="homelink" active-class="active"
-                                     :exact="nav_item.classes.includes('exact') ? true : false"
-                                     v-if="home">
-                            {{nav_item.title}}
-                        </router-link>
-                    </transition>
                 </div>
             </template>
         </nav>
@@ -49,11 +33,11 @@
             logo
         },
         methods: {
-            internal(slug){
-                if(slug.indexOf("http") === 0){
-                    console.log( "slug", slug );
+            internal(slug) {
+                if (slug.indexOf("http") === 0) {
+                    console.log("slug", slug);
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             },
@@ -97,15 +81,17 @@
     @import (reference) "~@styles/mixins";
 
 
-    .logolink{
+    .logolink {
         height: 5rem;
     }
+
     .logo-before-enter {
-        display:none;
+        display: none;
 
     }
+
     .logo-enter {
-        display:block;
+        display: block;
         height: 0;
         opacity: 0;
     }
@@ -119,8 +105,9 @@
         transition: all .2s ease !important;
         opacity: 0;
         height: 0;
-        svg#wue_svg{
-            margin:0;
+
+        svg#wue_svg {
+            margin: 0;
         }
     }
 
@@ -143,6 +130,38 @@
         transform: scale(0);
     }
 
+    .router-link-exact-active {
+        transform: none !important;
+    }
+
+    .homeLink {
+        position: relative;
+        transition: color .3s ease;
+        color: transparent !important;
+
+        &:before {
+            width: 7.5rem;
+            content: " ";
+            background-image: url(/wp-content/themes/wuetheme/img/wue-a-seo-friendly-vue-js-wordpress-starter-theme-logo.svg);
+            background-repeat: no-repeat;
+            position: absolute;
+            height: 4rem;
+            top: calc(50% ~'-' 2rem);
+            left: calc(50% ~'-' 3.75rem);
+            transform: scale(1);
+            transition: all .3s ease;
+        }
+    }
+
+    body[data-page-slug="Homepage"] {
+        .homeLink {
+            color: white !important;
+
+            &:before {
+                transform: scale(0);
+            }
+        }
+    }
 
     #header_nav {
         background-color: #2f4053;
@@ -171,15 +190,26 @@
         }
     }
 
-
     @media (max-width: @inner_container_width_px) {
         #header_nav nav.inner-container {
             .link a {
                 font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+            .link .homeLink{
+                margin-bottom: 2rem;
             }
         }
 
+        body[data-page-slug="Homepage"]{
+            #header_nav nav.inner-container {
+                .homeLink{
+                    margin-bottom: 1rem;
+                }
+            }
+        }
     }
+
 
 
     @media (max-width: @tablet_width_max) {

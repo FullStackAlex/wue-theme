@@ -16,17 +16,35 @@ html, body, #app, #app_container {
 
 a {
   text-decoration: none;
-  display:block;
+
   &,
   &:visited,
   &:active {
-    color: @green;
+    color: #39af78;
   }
 }
-p, div, ul, li{
+
+p, div, ul, li {
   font-family: Roboto;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+}
+p{
+  font-size: 1.4rem;
+  line-height: 1.6em;
+}
+
+@media (max-width: 768px){
+  p, div, ul, li{
+    font-size: 1.2rem;
+  }
+
+}
+@media (max-width: 490px){
+  p, div, ul, li{
+    font-size: 1rem;
+  }
+
 }
 ul {
   list-style: none;
@@ -39,12 +57,99 @@ h1 {
   .titleDefault();
 }
 
-h1,h2,h3,h4,h5,h6, nav *{
+h1, h2, h3, h4, h5, h6, nav * {
   text-transform: uppercase;
   font-weight: bold;
-  color:@blue;
+  color: @blue;
 }
 
 textarea {
   min-height: 4em !important;
+}
+
+.line-break {
+}
+
+.info-box {
+  background: @green;
+  padding: 3rem;
+  border-radius: 1em;
+  margin-bottom: 2em;
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  max-width: 100%;
+  @media (max-width: @tablet_width_max) {
+    font-size: 1.25rem;
+    padding: 2rem;
+  }
+}
+
+
+.button {
+  text-align:center;
+  .wp-block-button__link {
+    padding: 1.5rem 3rem;
+    border-radius: 10rem;
+    margin-bottom: 3rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: @green;
+    .defaultTransition();
+  }
+  &:hover{
+    .wp-block-button__link {
+      background-color: @blue;
+    }
+  }
+  @media (max-width: @tablet_width_max){
+    .wp-block-button__link {
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  }
+}
+
+.feature{
+  font-size: 2rem;
+  text-transform: none;
+  font-weight: 500;
+  font-family: Roboto;
+  margin-left: 4rem;
+  position:relative;
+  &:before{
+    content: '\261E';
+    position: absolute;
+    left: -4rem;
+    font-size: 3rem;
+    font-weight: bold;
+    top: calc(50%  ~'-' 2rem);
+  }
+
+  @media (max-width: @tablet_width_max ){
+    &{
+      font-size: 1.2rem;
+      margin-left: 2rem;
+    }
+    &:before{
+      content: '\261E';
+      position: absolute;
+      left: -2.1rem;
+      font-size: 2rem;
+      font-weight: bold;
+      top: calc(50%  ~'-' 1.4rem);
+    }
+
+  }
+}
+.text-transform-none{
+  text-transform: none;
+}
+.white{
+  &,a{
+    color: white;
+  }
 }

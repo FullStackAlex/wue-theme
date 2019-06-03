@@ -1,12 +1,12 @@
 <template>
     <div id="pageWrapper">
         <loader v-if="loader"></loader>
-        <section v-if="content" class="outer-container">
+        <section v-if="post.content" class="outer-container">
             <logo></logo>
             <h1 id="homePageTitle" class="title">
                 <span v-html="appTitle"></span><br><span v-html="subTitle"></span>
             </h1>
-            <div class="inner-container" v-html="content"></div>
+            <div class="inner-container" v-html="post.content"></div>
         </section>
     </div>
 </template>
@@ -23,9 +23,14 @@
         data: function () {
             return {
                 initialLoad: this.$store.getters.isInitialLoad,
-                content: null,
                 documentTitle: technomad.bloginfo.name,
-                loader: true
+                loader: true,
+                post:{
+                    title: null,
+                    content:null,
+                    datePublished: null,
+                    dateModified: null,
+                },
             }
         },
         components: {
@@ -47,38 +52,22 @@
         mounted() {
             this.$store.dispatch('setPageTitle', false);
             if (this.initialLoad) {
-                let initialLoader = document.getElementById("initialLoader");
-                document.body.removeChild(initialLoader);
-                this.title = technomad.initialData.title;
-                this.content = technomad.initialData.content;
-                this.documentTitle = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
-                this.$store.dispatch("setInitialLoadFalse");
-                this.$store.dispatch('setLoaderFalse');
-                this.$store.dispatch("setDocumentTitle", this.documentTitle);
-                this.loader = false;
-                this.mountedStuff();
+                this.initialStuff();
             } else {
                 this.loader = true;
-                var host = technomad.host;
-                var path = host + "/wp-json/technomad/frontpage/";
+                var path = technomad.host + "/wp-json/technomad/frontpage/";
                 axios.get(path)
                     .then(response => {
-                        console.log("response.data", response.data);
-                        this.documentTitle = technomad.bloginfo.name + " - " + technomad.bloginfo.description;
-                        this.content = response.data.content;
-                        this.$store.dispatch('setLoaderFalse');
-                        this.$store.dispatch("setDocumentTitle", this.documentTitle);
-                        this.loader = false;
-                        this.ajaxStuff();
+                        console.log( "response", response );
+                        this.ajaxStuff({
+                            response,
+                            responseData: response.data
+                        });
                     })
                     .catch(error => {
                         this.$store.dispatch('setLoaderFalse');
                         console.log("error", error);
                     });
-
-                if (document.getElementById('gallery')) {
-                    this.loaded = true;
-                }
             }
         },
         activated() {

@@ -25,8 +25,111 @@ export default {
 
             }, 500);
         },
-        mountedStuff() {
+
+        /**
+         * setup content of the component and global data (page title, document title, etc )
+         * if the current page is an entry page (initial load)
+         * see "ajaxStuff" method  for setup on route change once initial load is finished (ajax load)
+         **/
+        initialStuff(args) {
             this.setInternalRouterLinksInsideContent();
+            let initialLoader = document.getElementById("initialLoader");
+            document.body.removeChild(initialLoader);
+
+            let yoastTitle = technomad.yoastTitle;
+            if (yoastTitle === undefined || yoastTitle.length < 1) {
+                yoastTitle = false;
+            }
+            let argsDocumentTitle;
+            if (!(args && args.documentTitle)) {
+                argsDocumentTitle = false;
+            } else {
+                argsDocumentTitle = args.documentTitle;
+            }
+
+            this.$store.dispatch("setInitialLoadFalse");
+            this.$store.dispatch('setLoaderFalse');
+            this.loader = false;
+
+            /**
+             * if single post or page
+             **/
+            if (technomad.initialData.post) {
+                this.post = technomad.initialData.post;
+                this.title = this.post.title;
+
+
+                this.documentTitle = yoastTitle || argsDocumentTitle || this.title + " - " + technomad.bloginfo.name;
+
+
+                if (args) {
+                    if (args.title) {
+                        this.title = args.title
+                    }
+                    if (args.pageTitle === undefined) {
+                        this.$store.dispatch('setPageTitle', this.title);
+                    } else {
+                        this.$store.dispatch('setPageTitle', args.pageTitle);
+                    }
+                } else {
+                    console.log( "this.title", this.title );
+                    this.$store.dispatch('setPageTitle', this.title);
+                }
+
+                /**
+                 * if a list of posts:
+                 **/
+            } else if (technomad.initialData.posts) {
+                this.posts = technomad.initialData.posts;
+
+
+                this.documentTitle = yoastTitle || argsDocumentTitle || this.title + " - " + technomad.bloginfo.name;
+
+                /**
+                 * if any parameter is set
+                 **/
+                if (args) {
+                    /**
+                     * if parameter "title" is set
+                     **/
+                    if (args.title) {
+                        this.title = args.title
+                    }
+                    /**
+                     * if parameter "pageTitle" is set (explicitly false or string)
+                     **/
+                    if (args.pageTitle === undefined) {
+                        this.$store.dispatch('setPageTitle', this.title);
+                    } else {
+                        this.$store.dispatch('setPageTitle', args.pageTitle);
+                    }
+                } else {
+                    /**
+                     * if no parameters at all were attached to the callback
+                     **/
+                    this.$store.dispatch('setPageTitle', this.title);
+                }
+            }
+
+            this.$store.dispatch("setDocumentTitle", this.documentTitle);
+
+        },
+        activatedStuff(args) {
+            /**
+             * setup global data if compoenent was already loaded previously
+             * (either ajaxStuff or initialStuff completed)
+             **/
+            this.$store.dispatch('setLoaderFalse');
+            this.$store.dispatch("setDocumentTitle", this.documentTitle);
+            if (args) {
+                if (args.pageTitle === undefined) {
+                    this.$store.dispatch('setPageTitle', this.title);
+                } else {
+                    this.$store.dispatch('setPageTitle', args.pageTitle);
+                }
+            } else {
+                this.$store.dispatch('setPageTitle', this.title);
+            }
         },
 
         /**
@@ -36,6 +139,9 @@ export default {
 
             if (modified !== undefined) {
 
+                /**
+                 * compare dates without time (WP Rest API loads date with time)
+                 **/
                 if (new Date(modified).toLocaleString('en-us', {year: 'numeric', month: 'long', day: 'numeric'})
                     ===
                     new Date(date).toLocaleString('en-us', {year: 'numeric', month: 'long', day: 'numeric'}))

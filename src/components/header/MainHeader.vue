@@ -24,6 +24,7 @@
         computed: {
             pageTitle() {
                 this.title = this.$store.getters.getPageTitle;
+                console.log( "this.$store.getters.getPageTitle", this.$store.getters.getPageTitle );
                 if (this.title !== null) {
                     return this.$store.getters.getPageTitle;
                 }

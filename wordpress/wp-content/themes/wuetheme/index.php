@@ -36,7 +36,6 @@ if ( technomad_bot_detected() ) {
 	$post_query = new WP_Query( $args );
 
 	if ( $post_query->have_posts() ) {
-		// Load posts loop.
 		while ( $post_query->have_posts() ) {
 			$post_query->the_post();
 			$data["posts"][ $counter ]["title"]["rendered"] = get_the_title();

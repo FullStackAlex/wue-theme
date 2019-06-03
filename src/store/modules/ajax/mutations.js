@@ -19,7 +19,9 @@ export const setInitialLoadFalse = (state) => {
 };
 
 export const setDocumentTitle = (state, payload) => {
-    let noLineBreaks = payload.replace("<br>", " ");
-    document.title = noLineBreaks;
-    state.documentTitle = noLineBreaks;
+    let span = document.createElement("span");
+    span.innerHTML = payload;
+    let documentTitle = span.textContent;
+    document.title = documentTitle;
+    state.documentTitle = documentTitle;
 };

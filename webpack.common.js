@@ -1,7 +1,7 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const webpack = require('webpack');
+//const webpack = require('webpack');
 
 /**
  * enable or disable sourceMap

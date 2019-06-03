@@ -17,9 +17,11 @@ if ( technomad_bot_detected() ) {
 		// Load posts loop.
 		while ( have_posts() ) {
 			the_post();
-			$data            = [];
-			$data["title"]   = get_the_title();
-			$data["content"] = get_the_content();
+			$data                          = [];
+			$data["post"]["title"]         = apply_filters( "the_title", get_the_title() );
+			$data["post"]["content"]       = apply_filters( "the_content", get_the_content() );
+			$data["post"]["datePublished"] = get_the_date();
+			$data["post"]["dateModified"]  = get_the_modified_date();
 		}
 	}
 

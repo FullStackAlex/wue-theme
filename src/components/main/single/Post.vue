@@ -1,19 +1,18 @@
 <template>
     <section id="pageWrapper" class="outer-container single-post">
         <loader v-if="loader"></loader>
-        <div class="post-time inner-container" v-if="post.date">
-            <span class="date" v-if="initialLoad">
-                            {{post.date}}
+        <div class="post-time inner-container" v-if="post.datePublished">
+            <span class="date-published" v-if="initialLoad">{{post.datePublished}}</span>
+            <span class="date-published" v-else>
+                            {{ new Date(post.datePublished).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}}
                         </span>
-            <span class="date" v-else>
-                            {{ new Date(post.date).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}}
-                        </span>
-            <span class="update" v-if="post.update && post.update !== post.date"><br>(Updated: {{post.update}})</span>
-            <span class="update" v-else-if="checkDateVsModified(post.date, post.modified)">
-                <br>{{checkDateVsModified(post.date, post.modified)}}
+            <span class="data-modified"
+                  v-if="post.dateModified && post.dateModified !== post.datePublished"><br>(Updated: {{post.dateModified}})</span>
+            <span class="data-modified" v-else-if="checkDateVsModified(post.datePublished, post.dateModified)">
+                <br>{{checkDateVsModified(post.datePublished, post.dateModified)}}
             </span>
         </div>
-        <div id="single-post" class="blog-post post inner-container" v-html="content"></div>
+        <div id="single-post" class="blog-post post inner-container" v-html="post.content"></div>
     </section>
 </template>
 <script>
@@ -28,11 +27,15 @@
             return {
                 postPromise: null,
                 initialLoad: this.$store.getters.isInitialLoad,
-                content: "",
-                post: {},
+                loader: true,
                 title: null,
+                post: {
+                    title: null,
+                    content: "",
+                    datePublished: null,
+                    dateModified: null,
+                },
                 documentTitle: technomad.bloginfo.name,
-                loader: true
             }
         },
         components: {
@@ -54,33 +57,16 @@
         },
         mounted() {
             if (this.initialLoad) {
-                let initialLoader = document.getElementById("initialLoader");
-                document.body.removeChild(initialLoader);
-                this.content = technomad.initialData.post.content.rendered;
-                this.post = technomad.initialData.post;
-                this.$store.dispatch("setInitialLoadFalse");
-                this.$store.dispatch('setLoaderFalse');
-                this.title = technomad.initialData.title;
-                this.$store.dispatch("setPageTitle", this.title);
-                this.documentTitle = this.title + " - " + technomad.bloginfo.name;
-                this.$store.dispatch('setDocumentTitle', this.documentTitle);
-                this.loader = false;
-                this.mountedStuff();
+                this.initialStuff();
             } else {
                 this.loader = true;
                 var host = technomad.host;
                 var path = host + "/wp-json/wp/v2/posts?slug=" + this.$route.params.slug;
                 axios.get(path)
                     .then(response => {
-                        this.post = response.data[0];
-                        this.content = this.post.content.rendered;
-                        this.$store.dispatch("setPageTitle", this.post.title.rendered);
-                        this.title = this.post.title.rendered;
-                        this.$store.dispatch('setLoaderFalse');
-                        this.documentTitle = this.title + " - " + technomad.bloginfo.name;
-                        this.$store.dispatch('setDocumentTitle', this.documentTitle);
-                        this.loader = false;
-                        this.ajaxStuff();
+                        this.ajaxStuff({
+                            response,
+                            responseData: response.data[0]});
                     })
                     .catch(error => {
                         console.log("error", error);
@@ -88,8 +74,6 @@
                     });
 
             }
-        },
-        updated() {
         },
         activated() {
             this.$store.dispatch('setLoaderFalse');

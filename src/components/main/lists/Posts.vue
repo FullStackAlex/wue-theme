@@ -30,7 +30,8 @@
                         </span>
                     </div>
                     <h2 class="post-name" v-html="post.title.rendered"></h2>
-                    <p v-html="post.content.rendered"></p>
+                    <p v-html="post.excerpt.rendered" v-if="technomad.archives.news.excerpt"></p>
+                    <p v-html="post.content.rendered" v-else></p>
                 </router-link>
             </article>
         </div>
@@ -56,6 +57,7 @@
                 title: "News",
                 documentTitle: technomad.bloginfo.name,
                 loader: true,
+                technomad: technomad
             }
         },
         mixins: [
@@ -67,32 +69,23 @@
         },
         methods: {},
         mounted() {
-            this.$store.dispatch('setPageTitle', false);
             if (this.initialLoad) {
-                this.posts = technomad.initialData.posts;
-                let initialLoader = document.getElementById("initialLoader");
-                this.title = technomad.archives.news.title;
-                document.body.removeChild(initialLoader);
-                this.$store.dispatch("setInitialLoadFalse");
-                this.$store.dispatch('setLoaderFalse');
-                this.documentTitle = this.title + " - " + technomad.bloginfo.name;
-                this.$store.dispatch('setDocumentTitle', this.documentTitle);
-                this.loader = false;
-                this.mountedStuff();
+                this.initialStuff({
+                    title:technomad.archives.news.title
+                });
             } else {
                 this.loader = true;
                 var host = technomad.host;
                 var path = host + "/wp-json/wp/v2/posts?_embed";
+                console.log( "path", path );
                 axios.get(path)
                     .then(response => {
-                        console.log("response.data", response.data);
                         this.posts = response.data;
-                        this.title = technomad.archives.news.title;
-                        this.documentTitle = this.title + " - " + technomad.bloginfo.name;
-                        this.$store.dispatch('setDocumentTitle', this.documentTitle);
-                        this.$store.dispatch('setLoaderFalse');
-                        this.loader = false;
-                        this.ajaxStuff();
+                        this.ajaxStuff({
+                            response,
+                            responseData: response.data,
+                            title:technomad.archives.news.title
+                        })
                     })
                     .catch(error => {
                         console.log("error", error);
@@ -100,15 +93,8 @@
 
             }
         },
-        beforeMount() {
-        },
         activated() {
-            this.$store.dispatch('setLoaderFalse');
-            this.$store.dispatch("setPageTitle", this.title);
-            this.$store.dispatch('setDocumentTitle', this.documentTitle);
-        },
-        deactivated() {
-
+            this.activatedStuff();
         },
     }
 </script>
