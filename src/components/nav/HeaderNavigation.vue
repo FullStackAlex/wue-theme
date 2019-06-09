@@ -2,7 +2,7 @@
     <section id="header_nav" class="outer-container">
         <nav class="nav inner-container">
             <template v-for="nav_item in nav_items">
-                <div :id="nav_item.title" class=" link">
+                <div :id="nav_item.slug.replace(new RegExp('/', 'g'), '')" class=" link">
                     <router-link
                             :to="nav_item.slug"
                             :class="nav_item.title === 'Home' ? 'homeLink' : '' "
