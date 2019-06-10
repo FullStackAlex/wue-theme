@@ -78,13 +78,34 @@ function enqueue_header_script() {
  * https://developers.google.com/search/docs/guides/dynamic-rendering
  **/
 
-function technomad_bot_detected() {
-	return (
-		isset($_SERVER['HTTP_USER_AGENT'])
-		&& preg_match('/bot|googlebot|crawl|slurp|google-structured-data-testing-tool|spider|linkedinbot|bingbot|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])
-	);
-}
 
+function technomad_bot_detected() {
+
+	/**
+	 * load the app even it's requested by a bot
+	 * for example when you are using some performance tools like pingdom
+	 * https://yoursite.com?nocrawler
+	 **/
+	if(isset($_GET["nocrawler"])){
+		return false;
+	}
+
+	/**
+	 * check the bot markup from the browser by appending a GET "crawler" param like:
+	 * https://yoursite.com?crawler
+	 **/
+	elseif(isset($_GET["crawler"])){
+		return true;
+	}
+	/**
+	 * otherwise output app only if not requested by typical bots
+	 **/
+	else{
+		return (
+		(isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|googlebot|crawl|slurp|google-structured-data-testing-tool|spider|linkedinbot|bingbot|mediapartners/i', $_SERVER['HTTP_USER_AGENT']))
+		);
+	}
+}
 
 /**
  * enqueue app scripts only if not a bot (as they cause errors and unnecessary load)
