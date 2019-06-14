@@ -20,3 +20,8 @@ export const setInitialLoadFalse = ({commit}) => {
 export const setDocumentTitle = ({commit}, payload) =>{
     commit('setDocumentTitle', payload);
 };
+
+
+export const setFirstTimeActivationFalse = ({commit}) => {
+    commit('setFirstTimeActivationFalse');
+};

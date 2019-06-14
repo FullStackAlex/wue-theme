@@ -4,11 +4,6 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 
-import formsState from './modules/forms/state'
-import * as formsGetters from './modules/forms/getters'
-import * as formsMutations from './modules/forms/mutations'
-import * as formsActions from './modules/forms/actions'
-
 
 import ajaxState from './modules/ajax/state'
 import * as ajaxGetters from './modules/ajax/getters'
@@ -33,27 +28,6 @@ import * as footerGetters from './modules/footer/getters'
 import * as footerMutations from './modules/footer/mutations'
 import * as footerActions from './modules/footer/actions'
 
-import listState from './modules/lists/state'
-import * as listGetters from './modules/lists/getters'
-import * as listMutations from './modules/lists/mutations'
-import * as listActions from './modules/lists/actions'
-
-
-import modalsState from './modules/modals/state'
-import * as modalsGetters from './modules/modals/getters'
-import * as modalsMutations from './modules/modals/mutations'
-import * as modalsActions from './modules/modals/actions'
-
-
-
-
-
-const forms = {
-    state: formsState,
-    getters: formsGetters,
-    mutations: formsMutations,
-    actions: formsActions,
-};
 
 const ajax = {
     state: ajaxState,
@@ -80,30 +54,11 @@ const footer = {
     actions: footerActions,
 };
 
-const lists = {
-    state: listState,
-    getters: listGetters,
-    mutations: listMutations,
-    actions: listActions,
-};
-
-const modals = {
-    state: modalsState,
-    getters: modalsGetters,
-    mutations: modalsMutations,
-    actions: modalsActions,
-};
-
-
-
 export const store = new Vuex.Store({
     modules: {
-        forms,
         ajax,
         nav,
         header,
         footer,
-        lists,
-        modals,
     }
 });

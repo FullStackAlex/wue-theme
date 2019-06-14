@@ -30,12 +30,14 @@ if ( technomad_bot_detected() ) {
 		"order"          => "DESC",
 		"orderby"        => "date",
 		"post_status"    => "publish",
-		"posts_per_page" => - 1
+		"posts_per_page" => get_option("posts_per_page")
 	];
 
 	$post_query = new WP_Query( $args );
 
 	if ( $post_query->have_posts() ) {
+		$data["totalPosts"] = $post_query->found_posts;
+		$data["totalPages"] = $post_query->max_num_pages;
 		while ( $post_query->have_posts() ) {
 			$post_query->the_post();
 			$data["posts"][ $counter ]["title"]["rendered"] = get_the_title();
@@ -51,8 +53,8 @@ if ( technomad_bot_detected() ) {
 				$data["posts"][ $counter ]["content"]["rendered"] = $content;
 			}
 			$data["posts"][ $counter ]["id"]     = get_the_ID();
-			$data["posts"][ $counter ]["date"]   = get_the_date();
-			$data["posts"][ $counter ]["update"] = get_the_modified_date();
+			$data["posts"][ $counter ]["date"]   = get_the_date("c");
+			$data["posts"][ $counter ]["modified"] = get_the_modified_date("c");
 			$counter ++;
 		}
 		wp_reset_postdata();

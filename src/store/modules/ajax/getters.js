@@ -20,3 +20,9 @@ export const getDocumentTitle = state => {
 
     return state.documentTitle;
 };
+
+
+export const isFirstTimeActivation = state => {
+
+    return state.firstTimeActivation;
+};

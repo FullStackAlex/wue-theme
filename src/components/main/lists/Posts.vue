@@ -17,20 +17,16 @@
                                  alt="">
                         </template>
                     </div>
-                    <div class="post-time" v-if="post.date">
-                        <span class="date" v-if="initialLoad">
-                            {{post.date}}
-                        </span>
-                        <span class="date" v-else>
+                    <div class="post-time">
+                        <span class="date">
                             {{ new Date(post.date).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}}
                         </span>
-                        <span class="update" v-if="post.update && post.update !== post.date"><br>(Updated: {{post.update}})</span>
-                        <span class="update" v-else-if="checkDateVsModified(post.date, post.modified)">
-                            <br>{{checkDateVsModified(post.date, post.modified)}}
+                        <span class="update" v-if="post.modified && checkDateVsModified(post.date, post.modified)">
+                             &bull; {{checkDateVsModified(post.date, post.modified)}}
                         </span>
                     </div>
                     <h2 class="post-name" v-html="post.title.rendered"></h2>
-                    <p v-html="post.excerpt.rendered" v-if="technomad.archives.news.excerpt"></p>
+                    <p v-html="post.excerpt.rendered" v-if="technomad.archives.blog.excerpt"></p>
                     <p v-html="post.content.rendered" v-else></p>
                 </router-link>
             </article>
@@ -43,6 +39,7 @@
     import ajaxMixins from "~/mixins/ajaxMixins"
     import globalMainMixins from "~/mixins/globalMainMixins"
     import loader from "~/components/ui/loaders/Main"
+    import paginationMixins from "~/mixins/paginationMixins";
 
 
     export default {
@@ -51,17 +48,20 @@
         data() {
             return {
                 initialLoad: this.$store.getters.isInitialLoad,
-                posts: null,
+                posts: true,
                 post_id: "",
                 content: "",
-                title: "News",
-                documentTitle: technomad.bloginfo.name,
+                title: "Blog",
+                documentTitle: technomad.siteInfo.name,
                 loader: true,
+                totalPages: 0,
+                totalPosts: 0,
                 technomad: technomad
             }
         },
         mixins: [
             globalMainMixins,
+            paginationMixins,
             ajaxMixins
         ],
         components: {
@@ -71,25 +71,33 @@
         mounted() {
             if (this.initialLoad) {
                 this.initialStuff({
-                    title:technomad.archives.news.title
+                    title:technomad.archives.blog.title
                 });
             } else {
                 this.loader = true;
-                var host = technomad.host;
-                var path = host + "/wp-json/wp/v2/posts?_embed";
-                console.log( "path", path );
-                axios.get(path)
-                    .then(response => {
-                        this.posts = response.data;
-                        this.ajaxStuff({
-                            response,
-                            responseData: response.data,
-                            title:technomad.archives.news.title
-                        })
+                this.ajaxStatus = "pending";
+                /**
+                 * concatenating the ajax url
+                 **/
+                let host = technomad.host;
+                let endpoint = "/wp-json/wp/v2/posts?";
+                let postsPerPage = "per_page=" + technomad.archives.blog.postsPerPage;
+                let path = host + endpoint + postsPerPage + "&_embed";
+                axios.get(
+                    path,
+                    {
+                        headers: {
+                            'X-WP-Nonce': technomad.nonce
+                        }
+                    }).then(response => {
+                    this.ajaxStuff({
+                        response,
+                        responseData: response.data,
+                        title:technomad.archives.blog.title
                     })
-                    .catch(error => {
-                        console.log("error", error);
-                    });
+                }).catch(error => {
+                    console.log("error", error);
+                });
 
             }
         },

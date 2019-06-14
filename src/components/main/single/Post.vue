@@ -1,14 +1,11 @@
 <template>
-    <section id="pageWrapper" class="outer-container single-post">
+    <section id="pageWrapper" class="outer-container single-post blog">
         <loader v-if="loader"></loader>
         <div class="post-time inner-container" v-if="post.datePublished">
-            <span class="date-published" v-if="initialLoad">{{post.datePublished}}</span>
-            <span class="date-published" v-else>
-                            {{ new Date(post.datePublished).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}}
-                        </span>
-            <span class="data-modified"
-                  v-if="post.dateModified && post.dateModified !== post.datePublished"><br>(Updated: {{post.dateModified}})</span>
-            <span class="data-modified" v-else-if="checkDateVsModified(post.datePublished, post.dateModified)">
+            <span class="date-published">
+                {{ new Date(post.datePublished).toLocaleString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}}
+            </span>
+            <span class="data-modified" v-if="post.dateModified && checkDateVsModified(post.datePublished, post.dateModified)">
                 <br>{{checkDateVsModified(post.datePublished, post.dateModified)}}
             </span>
         </div>
@@ -35,7 +32,7 @@
                     datePublished: null,
                     dateModified: null,
                 },
-                documentTitle: technomad.bloginfo.name,
+                documentTitle: technomad.siteInfo.name,
             }
         },
         components: {
@@ -60,6 +57,7 @@
                 this.initialStuff();
             } else {
                 this.loader = true;
+                this.ajaxStatus = "pending";
                 var host = technomad.host;
                 var path = host + "/wp-json/wp/v2/posts?slug=" + this.$route.params.slug;
                 axios.get(path)
@@ -76,14 +74,11 @@
             }
         },
         activated() {
-            this.$store.dispatch('setLoaderFalse');
-            this.$store.dispatch("setPageTitle", this.title);
-            this.$store.dispatch('setDocumentTitle', this.documentTitle);
+            this.activatedStuff();
         }
     }
 </script>,
 <style lang="less">
-    @import "~@node_modules/magnific-popup/dist/magnific-popup.css";
     @import "~@styles/variables";
     @import "~@styles/flex";
     @import "~@styles/mixins";

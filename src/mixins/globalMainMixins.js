@@ -32,6 +32,7 @@ export default {
          * see "ajaxStuff" method  for setup on route change once initial load is finished (ajax load)
          **/
         initialStuff(args) {
+            console.log("%c initialStuff", "background: #770000; color:white");
             this.setInternalRouterLinksInsideContent();
             let initialLoader = document.getElementById("initialLoader");
             document.body.removeChild(initialLoader);
@@ -59,7 +60,7 @@ export default {
                 this.title = this.post.title;
 
 
-                this.documentTitle = yoastTitle || argsDocumentTitle || this.title + " - " + technomad.bloginfo.name;
+                this.documentTitle = yoastTitle || argsDocumentTitle || this.title + " - " + technomad.siteInfo.name;
 
 
                 if (args) {
@@ -72,7 +73,6 @@ export default {
                         this.$store.dispatch('setPageTitle', args.pageTitle);
                     }
                 } else {
-                    console.log( "this.title", this.title );
                     this.$store.dispatch('setPageTitle', this.title);
                 }
 
@@ -83,7 +83,7 @@ export default {
                 this.posts = technomad.initialData.posts;
 
 
-                this.documentTitle = yoastTitle || argsDocumentTitle || this.title + " - " + technomad.bloginfo.name;
+                this.documentTitle = yoastTitle || argsDocumentTitle || this.title + " - " + technomad.siteInfo.name;
 
                 /**
                  * if any parameter is set
@@ -115,21 +115,31 @@ export default {
 
         },
         activatedStuff(args) {
+            let firstTimeActivation = this.$store.getters.isFirstTimeActivation;
+
             /**
-             * setup global data if compoenent was already loaded previously
-             * (either ajaxStuff or initialStuff completed)
+             * run only if the activated hook is called after ajaxStuff or mountedStuff
              **/
-            this.$store.dispatch('setLoaderFalse');
-            this.$store.dispatch("setDocumentTitle", this.documentTitle);
-            if (args) {
-                if (args.pageTitle === undefined) {
-                    this.$store.dispatch('setPageTitle', this.title);
+            if (!firstTimeActivation && this.ajaxStatus !== "pending") {
+                console.log("%c activatedStuff", "background: green; color:white");
+                /**
+                 * setup global data if component was already loaded previously
+                 * (either ajaxStuff or initialStuff completed)
+                 **/
+                this.$store.dispatch('setLoaderFalse');
+                this.$store.dispatch("setDocumentTitle", this.documentTitle);
+                if (args) {
+                    if (args.pageTitle === undefined) {
+                        this.$store.dispatch('setPageTitle', this.title);
+                    } else {
+                        this.$store.dispatch('setPageTitle', args.pageTitle);
+                    }
                 } else {
-                    this.$store.dispatch('setPageTitle', args.pageTitle);
+                    this.$store.dispatch('setPageTitle', this.title);
                 }
-            } else {
-                this.$store.dispatch('setPageTitle', this.title);
             }
+
+            this.$store.dispatch('setFirstTimeActivationFalse');
         },
 
         /**
@@ -156,7 +166,6 @@ export default {
                 }
             }
         }
-
 
     }
 

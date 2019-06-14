@@ -20,8 +20,8 @@ if ( technomad_bot_detected() ) {
 			$data                          = [];
 			$data["post"]["title"]         = apply_filters( "the_title", get_the_title() );
 			$data["post"]["content"]       = apply_filters( "the_content", get_the_content() );
-			$data["post"]["datePublished"] = get_the_date();
-			$data["post"]["dateModified"]  = get_the_modified_date();
+			$data["post"]["datePublished"] = get_the_date("c");
+			$data["post"]["dateModified"]  = get_the_modified_date("c");
 		}
 	}
 

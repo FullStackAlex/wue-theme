@@ -23,7 +23,7 @@
             return {
                 footerNavs: technomad.menus,
                 copyrightYear: new Date().getFullYear(),
-                bloginfo: technomad.bloginfo
+                siteInfo: technomad.siteInfo
             }
         },
         components: {},
@@ -32,7 +32,6 @@
 
             internal(slug){
                 if(slug.indexOf("http") === 0){
-                    console.log( "slug", slug );
                     return false;
                 }else{
                     return true;

@@ -3,12 +3,10 @@
         <component v-bind:is="header"></component>
         <main-vue></main-vue>
         <footer-vue></footer-vue>
-        <modals></modals>
     </div>
 </template>
 <script>
     import MainVue from '~/components/main/Main'
-    import Modals from '~/components/modals/Modals'
     import FooterVue from '~/components/footer/Footer'
 
     require("~/less/style.less");
@@ -16,16 +14,12 @@
     export default {
         name: 'App',
         components: {
-            Modals,
             MainVue,
             FooterVue,
         },
         computed: {
             header() {
                 return this.$store.getters.getHeader;
-            },
-            auth() {
-                return this.$store.getters.isAuthenticated;
             },
             title() {
                 return this.$store.state.header.appTitle;

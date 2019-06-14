@@ -6,8 +6,6 @@ if ( current_user_can( "administrator" ) ) {
 
 add_theme_support( 'post-thumbnails' );
 
-get_template_part( "inc/custom-post-types/custom-post-types" );
-
 /**
  * remove wordpress version number from files
  **/
@@ -24,8 +22,6 @@ add_filter( 'acf/rest_api/field_settings/show_in_rest', '__return_true' );
  **/
 add_filter( 'acf/rest_api/field_settings/edit_in_rest', '__return_true' );
 
-
-get_template_part( "inc/custom-endpoints/functions" );
 
 
 /**
@@ -183,13 +179,6 @@ add_filter( 'rest_endpoints', function ( $endpoints ) {
  * custom image size named "500"
  **/
 add_image_size( '500', "500" );
-
-
-
-/**
- * custom functions used on the demo site wuetheme.tech-nomad.de but not included in the Github Repo
- **/
-get_template_part("inc/wuetheme-tech-nomad-de/functions");
 
 
 

@@ -20,7 +20,6 @@
     </section>
 </template>
 <script>
-    import logo from '~/components/header/Logo.vue'
 
     export default {
         name: "HeaderNavigation", //template tag name
@@ -29,13 +28,9 @@
                 nav_items: technomad.menus["header-menu"],
             }
         },
-        components: {
-            logo
-        },
         methods: {
             internal(slug) {
                 if (slug.indexOf("http") === 0) {
-                    console.log("slug", slug);
                     return false;
                 } else {
                     return true;
@@ -140,16 +135,16 @@
         color: transparent !important;
 
         &:before {
-            width: 7.5rem;
+            width: 6rem;
             content: " ";
-            background-image: url(/wp-content/themes/wuetheme/img/wue-a-seo-friendly-vue-js-wordpress-starter-theme-logo.svg);
             background-repeat: no-repeat;
             position: absolute;
-            height: 4rem;
-            top: calc(50% ~'-' 2rem);
-            left: calc(50% ~'-' 3.75rem);
+            height: 6rem;
+            top: calc(50% ~'-' 3rem);
+            left: calc(50% ~'-' 3rem);
             transform: scale(1);
             transition: all .3s ease;
+            background-size: contain;
         }
     }
 

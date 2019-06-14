@@ -18,6 +18,12 @@ export const setInitialLoadFalse = (state) => {
     state.initialLoad = false;
 };
 
+
+export const setFirstTimeActivationFalse = (state) => {
+    state.firstTimeActivation = false;
+};
+
+
 export const setDocumentTitle = (state, payload) => {
     let span = document.createElement("span");
     span.innerHTML = payload;

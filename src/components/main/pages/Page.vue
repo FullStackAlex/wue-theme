@@ -17,7 +17,7 @@
             return {
                 initialLoad: this.$store.getters.isInitialLoad,
                 loader: true,
-                documentTitle: technomad.bloginfo.name,
+                documentTitle: technomad.siteInfo.name,
                 post:{
                     title: null,
                     content:null,
@@ -38,6 +38,7 @@
                 this.initialStuff();
             } else {
                 this.loader = true;
+                this.ajaxStatus = "pending";
                 var path = technomad.host + "/wp-json/wp/v2/pages?slug=" + this.$route.params.slug;
                 axios.get(path)
                     .then(response => {

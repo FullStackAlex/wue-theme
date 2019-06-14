@@ -1,18 +1,23 @@
 export default {
+    data(){
+        return{
+            ajaxStatus: false
+        }
+    },
     methods: {
-
         ajaxStuff(args) {
-            
+            console.log("%c ajaxStuff", "background: 007700; color:white");
+
             /**
              * defined in globalMainMixins.js
              **/
             this.setInternalRouterLinksInsideContent();
-            
-            
+
+            this.ajaxStatus = "loaded";
             this.loader = false;
             this.$store.dispatch('setLoaderFalse');
-            
-            
+
+
             /**
              * if single post or page
              **/
@@ -24,8 +29,9 @@ export default {
                 } else {
                     throw "No ajax responseData";
                 }
-                if (this.post) {
-                    this.post.datePublished = this.post.date;
+
+                this.post.datePublished = this.post.date;
+                if(this.post.modified){
                     this.post.dateModified = this.post.modified;
                 }
 
@@ -58,7 +64,7 @@ export default {
                 if (args.documentTitle) {
                     this.documentTitle = args.documentTitle;
                 } else {
-                    this.documentTitle = this.title + " - " + technomad.bloginfo.name;
+                    this.documentTitle = this.title + " - " + technomad.siteInfo.name;
                 }
 
             }
@@ -93,22 +99,13 @@ export default {
                 if (args.documentTitle) {
                     this.documentTitle = args.documentTitle;
                 } else {
-                    this.documentTitle = this.title + " - " + technomad.bloginfo.name;
+                    this.documentTitle = this.title + " - " + technomad.siteInfo.name;
                 }
+                this.totalPages = args.response.headers["x-wp-totalpages"];
+                this.totalPosts = args.response.headers["x-wp-total"];
             }
             this.$store.dispatch('setPageTitle', this.pageTitle);
             this.$store.dispatch("setDocumentTitle", this.documentTitle);
         },
-        scrollToTop(next) {
-
-        }
-    },
-    beforeRouteUpdate(to, from, next) {
-        //this.scrollToTop(next);
-        next();
-    },
-    beforeRouteLeave(to, from, next) {
-        //this.scrollToTop(next);
-        next();
     },
 }

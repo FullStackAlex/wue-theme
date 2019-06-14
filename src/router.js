@@ -10,11 +10,6 @@ export default new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     saveScrollPosition: true,
-    scrollBehavior(to, from, savedPosition) {
-        return new Promise((resolve, reject) => {
-            resolve({x: 0, y: 0})
-        })
-    },
     routes: [
         {
             path: '/',
