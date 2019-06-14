@@ -1,3 +1,6 @@
+### update 14.06.2019
+#### You'll find the starter theme demo now at [starter.wue-theme.app](https://starter.wue-theme.app). The main domain [wue-theme.app](https://wue-theme.app) will contain more general content and information and will have additianal features. So I've seperated the demo to not confuse you.  
+
 # Wue Theme - A SEO friendly Vue.js WordPress single page application starter theme  
 ### with all the goodness of both worlds: 
 ### - Webpacks Hot Module Replacement (HMR) inside php files! 
@@ -5,7 +8,7 @@
 (keep using usual WordPress templates to organise your theme!)
 ### - lightning fast!
 (though the more plugins you add and the more data will be safed in the database the more performance optimisation you will have to apply as with all WordPress sites)
-### - Full SEO support without Nuxt.js and phpv8/v8js! 
+### - Full SEO support without Nuxt.js and phpv8/v8js! (using Dynamic Rendering) 
 ### - Thus keep using the window object in your Vue templates!
 How cooooool is this! :blush:
 ### - Thus a plug-and-play theme without any effort from the user side
@@ -18,7 +21,7 @@ Here he's promising to have solved the issue:
    
 Though I am actually thankfull it didn't work with Nuxt.js and I've developed this approach here :blush:
 
-## Demo: [wue-theme.app](https://wue-theme.app)
+## Demo: [starter.wue-theme.app](https://starter.wue-theme.app)
 
 ## How it works:
 „Conventional“ Single Page Applications use the headless approach where the backend is reduced to output the JSON data for the frontend app. While this is great for performance it is bad for SEO. So you need to pre-render the app or render it on each request on the server side. The most famous tool for Server Side Rendering (SSR) Vue.js apps is Nuxt.js. But it has some disadvantages. First it requires to remove all the window object references from the Vue components. Then the router has to be adapted to the Nuxt-Workflow. For me the killer argument was that the keep-alive feature doesn’t work (properly) with Nuxt.js. And on the top of this you need to learn one technology more and setup an extra node.js server for serving the rendered files. I don't have any problems to learn new things. Otherwise this theme wouldn't exist :) But why should I use and setup a Node.js server to get a WordPress site work?! No way. In some cases (some supa dupa high tech sites with a bunch of micro services and 50 different backend technologies and a team of 20 people for both backend and frontend - but why are you using WordPress then? :grin:) it might be ok. But not in the most of the WordPress use cases. Especially when you don't have the option to use Node.js on the server (keyword shared hosting) or when it's unaccaptable to bother the client to prerender the app each time they update or create post/page/product. I wish I would have clients who can spend 20.000€ on a WordPress site, then I wouldn't need this theme and go probably with the headless approach. But I have deal with clients who don't have such huge budgets and have to deliver cheap and quickly. One other use case for this theme is if you want to sell plug and play single page application themes. The "headless" dogma is the reason why there is still no official Vue.js Single Page Application Theme to buy. Unitll now :blush:  
@@ -189,7 +192,10 @@ That's actually it. There are no any other "secrets". All the other difficulties
     </VirtualHost>
     ~~~~
     
-3. create a database named wue_theme_public and a database user wuethemepublic (or just change the db credentials in the wp-config.php):
+3. rename wp-config-sample.php to wp-config.php 
+3.1 add "[salts](https://api.wordpress.org/secret-key/1.1/salt/)" wp-config.php 
+
+4. create a database named wue_theme_public and a database user wuethemepublic (or just change the db credentials in the wp-config.php):
     ~~~~
     mysql -uroot -p 
     CREATE DATABASE wue_theme_public CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -197,25 +203,25 @@ That's actually it. There are no any other "secrets". All the other difficulties
     GRANT ALL PRIVILEGES ON wue_theme_public . * TO wuethemepublic@localhost;
     ~~~~
  
-4. import database into your MySQL server:
+5. import database into your MySQL server:
     ~~~~
     cd /Users/YourUserName/path/to/project/wue-theme-public
     mysql -uwuethemepublic -pcornhulio wue_theme_public < database.sql
     ~~~~
    
-5. Install dev node modules (I assume you have [Node.js](https://nodejs.org/en/download/) installed):
+6. Install dev node modules (I assume you have [Node.js](https://nodejs.org/en/download/) installed):
     ~~~~
     cd /Users/YourUserName/path/to/project/wue-theme-public
     npm install
     ~~~~
-6. start dev server:
+7. start dev server:
     ~~~~
     cd /Users/YourUserName/path/to/project/wue-theme-public
     npm run start    
     ~~~~
     * if port 9200 is already in use change it to any other in the webpack.dev.js
     
-7. Login into WordPress Backend:
+8. Login into WordPress Backend:
     * https://dev.wue-theme-public/wp-admin
     * User: KungFuMaster
     * Password: kamasutra
@@ -254,9 +260,5 @@ More documentation is coming soon. Meanwhile you can check [my other repo where 
 
 ## Roadmap
 
-1. Pagination
-2. Automated Custom Post Types integration allowing the user to create and name Custom Post Types as he/she wants
-   * Demo Portfolio 
-3. Simple contact page form without plugins
-4. YouTube Tutorial
-5. Comments for posts
+- Youtube tutorial
+- Proper documentation and comments within the code 
