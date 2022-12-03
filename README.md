@@ -1,3 +1,7 @@
+### update Dec 2022
+There is a major upgrade coming soon (end of December 2022?). 
+The project is being fully refactored right now, using Docker, Vite, Pinia, Vue 3 (composition api), Vitest and TypeScript. It's gonna be an opiniated boilerplate to start Vue + WordPress frontend projects more quickly, containing fully featured blog and page routing including fancy blog pagination and comment system. So, keep an eye this repo / visit this page once in a while if you are eager to see how easily modern Vue development can be combined with WordPress as a backend. 
+
 ### update 14.06.2019
 #### You'll find the starter theme demo now at [starter.wue-theme.app](https://starter.wue-theme.app). The main domain [wue-theme.app](https://wue-theme.app) will contain more general content and information and will have additianal features. So I've seperated the demo to not confuse you.  
 
