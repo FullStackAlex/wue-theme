@@ -1,3 +1,5 @@
+### update Feb 2023
+Once more I have to postpone the update/upgrade of the project due to lasting post covid symptoms (among a few other things). Sorry.
 ### update Dec 2022
 There is a major upgrade coming soon (end of December 2022?). 
 The project is being fully refactored right now, using Docker, Vite, Pinia, Vue 3 (composition api), Vitest and TypeScript. It's gonna be an opiniated boilerplate to start Vue + WordPress frontend projects more quickly, containing fully featured blog and page routing including fancy blog pagination and comment system. So, keep an eye this repo / visit this page once in a while if you are eager to see how easily modern Vue development can be combined with WordPress as a backend. 
