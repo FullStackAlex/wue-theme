@@ -1,3 +1,7 @@
+### update August 2024
+After using both for almost 10 years, I've moved on from PHP and WordPress (for the most part) to building custom Rust and Go APIs. So I don't think I will ever come back to this project, since I doubt I will ever need to distribute a (WordPress) SPA app again that needs to run without a Node server.
+I've also finally adapted to Nuxt and are mostly fine with it. There is also Vite's SSR which looks promising (but didn't used it yet).
+
 ### update March 2023
 Once more I have to postpone the update/upgrade of the project due to lasting post covid symptoms (among a few other things). Sorry.
 ### update Dec 2022
